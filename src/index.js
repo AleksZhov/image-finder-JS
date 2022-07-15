@@ -20,7 +20,8 @@ const onSubmitHandle = evt => {
 
   pixabayApi.query = evt.currentTarget.elements.searchQuery.value.trim();
   evt.currentTarget.elements.searchQuery.value = '';
-
+  pixabayApi.page = 1;
+  console.log(pixabayApi.page);
   pixabayApi
     .getImages()
     .then(result => {
@@ -53,6 +54,7 @@ getRefs().form.addEventListener('submit', onSubmitHandle);
 
 function onLoadMoreBtnHandle(evt) {
   pixabayApi.incrementPage();
+  console.log(pixabayApi.page);
   if (pixabayApi.page >= pixabayApi.totalPages()) {
     getRefs().loadMoreBtnRef.classList.add('is-hidden');
   }

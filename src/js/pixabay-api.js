@@ -9,7 +9,7 @@ export class PixabayAPI {
   #itemsPerPage;
   #settings;
   constructor() {
-    this.#page = 1;
+    this.#page = 0;
     this.#query = '';
     this.#totalHits = 0;
     this.#itemsPerPage = 40;
