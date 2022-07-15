@@ -2,6 +2,8 @@ export function createGalleryCards(images) {
   return images.map(
     ({
       webformatURL,
+      webformatHeight,
+      webformatWidth,
       largeImageURL,
       tags,
       likes,
@@ -10,7 +12,7 @@ export function createGalleryCards(images) {
       downloads,
     }) => {
       return `<a href="${largeImageURL}" class="photo-card">
-  <img class="gallery-img" src="${webformatURL}" alt="${tags}"  loading="lazy" />
+  <img class="gallery-img" src="${webformatURL}" alt="${tags}" height="${webformatHeight}" width = "${webformatWidth}"  loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>

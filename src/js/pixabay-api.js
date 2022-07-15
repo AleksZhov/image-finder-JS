@@ -16,24 +16,43 @@ export class PixabayAPI {
 
     this.#settings = {};
   }
-  getImages(query) {
-    return axios({
-      method: 'get',
-      url: `${this.#BASE_URL}?key=${this.#API_KEY}&q=${this.#query}&page=${
-        this.#page
-      }&per_page=${
-        this.#itemsPerPage
-      }&image_type=photo&orientation=horizontal&safesearch=true`,
-    })
-      .then(response => {
-        console.log(response.data);
-        if (!response.data) {
-          throw new Error(response.statusText);
-        }
-        return response.data;
-      })
-      .catch(error => console.log(error));
+
+  async getImages() {
+    try {
+      const response = await axios({
+        method: 'get',
+        url: `${this.#BASE_URL}?key=${this.#API_KEY}&q=${this.#query}&page=${
+          this.#page
+        }&per_page=${
+          this.#itemsPerPage
+        }&image_type=photo&orientation=horizontal&safesearch=true`,
+      });
+
+      const result = await response.data;
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
+  //   getImages(query) {
+  //     return axios({
+  //       method: 'get',
+  //       url: `${this.#BASE_URL}?key=${this.#API_KEY}&q=${this.#query}&page=${
+  //         this.#page
+  //       }&per_page=${
+  //         this.#itemsPerPage
+  //       }&image_type=photo&orientation=horizontal&safesearch=true`,
+  //     })
+  //       .then(response => {
+  //         console.log(response.data);
+  //         if (!response.data) {
+  //           throw new Error(response.statusText);
+  //         }
+  //         return response.data;
+  //       })
+  //       .catch(error => console.log(error));
+  //     }
+
   get page() {
     return this.#page;
   }
