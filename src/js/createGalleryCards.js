@@ -11,8 +11,8 @@ export function createGalleryCards(images) {
       comments,
       downloads,
     }) => {
-      return `<a href="${largeImageURL}" class="photo-card">
-  <img class="gallery-img" src="${webformatURL}" alt="${tags}" height="${webformatHeight}" width = "${webformatWidth}"  loading="lazy" />
+      return `<a href="${largeImageURL}" class="photo-card ">
+  <img class="gallery-img " src="${webformatURL}" alt="${tags}" height="${webformatHeight}" width = "${webformatWidth}"  loading="lazy" />
   <div class="info">
     <p class="info-item">
       <b>Likes: ${likes}</b>

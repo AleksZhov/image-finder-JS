@@ -6,6 +6,7 @@ import { createGalleryCards } from './js/createGalleryCards';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import SimpleLightbox from 'simplelightbox';
 import InfiniteScroll from 'infinite-scroll';
+import debounce from 'lodash.debounce';
 
 const pixabayApi = new PixabayAPI();
 
@@ -40,6 +41,7 @@ const onSubmitHandle = evt => {
       const markup = createGalleryCards(images).join('');
       getRefs().galleryRef.innerHTML = markup;
       lightbox.refresh();
+
       if (pixabayApi.totalHits > pixabayApi.itemsPerPage) {
         getRefs().loadMoreBtnRef.classList.remove('is-hidden');
       }
@@ -47,6 +49,16 @@ const onSubmitHandle = evt => {
       if (pixabayApi.page >= pixabayApi.totalPages()) {
         getRefs().loadMoreBtnRef.classList.add('is-hidden');
       }
+    })
+    .then(res => {
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
     });
 };
 getRefs().form.addEventListener('submit', onSubmitHandle);
@@ -65,8 +77,21 @@ function onLoadMoreBtnHandle(evt) {
     .then(images => {
       const markup = createGalleryCards(images).join('');
       getRefs().galleryRef.insertAdjacentHTML('beforeend', markup);
+
       lightbox.refresh();
     });
 }
 
 getRefs().loadMoreBtnRef.addEventListener('click', onLoadMoreBtnHandle);
+
+window.addEventListener(
+  'scroll',
+  debounce(() => {
+    if (
+      window.scrollY + window.innerHeight >=
+      document.documentElement.scrollHeight - 1
+    ) {
+      onLoadMoreBtnHandle();
+    }
+  }, 300)
+);
