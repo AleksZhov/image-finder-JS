@@ -50,10 +50,9 @@ const onSubmitHandle = evt => {
         getRefs().loadMoreBtnRef.classList.add('is-hidden');
       }
     })
-    .then(res => {
-      const { height: cardHeight } = document
-        .querySelector('.gallery')
-        .firstElementChild.getBoundingClientRect();
+    .then(() => {
+      const { height: cardHeight } =
+        getRefs().galleryRef.firstElementChild.getBoundingClientRect();
 
       window.scrollBy({
         top: cardHeight * 2,
